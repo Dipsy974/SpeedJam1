@@ -97,7 +97,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashSpeed: 30
   runSpeed: 8
-  groundDrag: 4
+  wallrunSpeed: 8
+  groundDrag: 7
   jumpForce: 11
   jumpCooldown: 0.25
   airMultiplier: 0.4
@@ -110,6 +111,14 @@ MonoBehaviour:
   slideYScale: 0.3
   maxSlideTime: 0.75
   slideForce: 300
+  wallRunForce: 200
+  maxWallRunTime: 0.75
+  wallJumpUpForce: 12
+  wallJumpSideForce: 15
+  exitWallTime: 0.2
+  wallCheckDistance: 0.7
+  minJumpHeight: 2
+  cam: {fileID: 0}
   jumpKey: 32
   slideKey: 304
   dashKey: 102
@@ -117,6 +126,9 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  wallLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   orientation: {fileID: 5254784697878412247}
   currentState: 0
 --- !u!1 &5254784697452321115
@@ -131,6 +143,7 @@ GameObject:
   - component: {fileID: 5254784697452321119}
   - component: {fileID: 5254784697452321118}
   - component: {fileID: 5254784697452321117}
+  - component: {fileID: 3327744242740051391}
   m_Layer: 0
   m_Name: Player Object
   m_TagString: Untagged
@@ -212,10 +225,23 @@ CapsuleCollider:
   m_GameObject: {fileID: 5254784697452321115}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &3327744242740051391
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5254784697452321115}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2, z: 0.73}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5254784697878412246
 GameObject:
