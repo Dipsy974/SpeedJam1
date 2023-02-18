@@ -55,6 +55,11 @@ public class PlayerMovement : MonoBehaviour
     private RaycastHit leftWallHit, rightWallHit;
     private bool wallLeft, wallRight;
 
+    [Header("Affected by Explosion")]
+    public float affectedTime;
+    private bool justExploded;
+
+
     [Header("Camera")]
     public PlayerCamera cam;
     
@@ -266,7 +271,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rigibody.AddForce(moveDir * moveSpeed * 10f, ForceMode.Force);
         }
-        else if (!isGrounded && !exitingWall && !wallRight && !wallLeft)
+        else if (!isGrounded && !exitingWall && !wallRight && !wallLeft && !justExploded)
         {
             rigibody.AddForce(moveDir * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
@@ -454,5 +459,18 @@ public class PlayerMovement : MonoBehaviour
     private void DelayedWallJump()
     {
         rigibody.AddForce(delayedForceToApply, ForceMode.Impulse);
+    }
+
+    public void GetAffectedByExplosion(Vector3 direction, float force)
+    {
+        justExploded = true; 
+        rigibody.AddForceAtPosition(direction * force + Vector3.up * force, transform.position, ForceMode.Impulse);
+
+        Invoke(nameof(CancelAffectedByExplosion), affectedTime);
+    }
+
+    private void CancelAffectedByExplosion()
+    {
+        justExploded = false; 
     }
 }
