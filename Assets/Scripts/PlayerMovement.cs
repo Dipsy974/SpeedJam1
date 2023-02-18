@@ -266,7 +266,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rigibody.AddForce(moveDir * moveSpeed * 10f, ForceMode.Force);
         }
-        else if (!isGrounded && exitingWall)
+        else if (!isGrounded && !exitingWall && !wallRight && !wallLeft)
         {
             rigibody.AddForce(moveDir * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }

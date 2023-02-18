@@ -115,9 +115,9 @@ MonoBehaviour:
   maxWallRunTime: 0.75
   wallJumpUpForce: 12
   wallJumpSideForce: 15
-  exitWallTime: 0.2
+  exitWallTime: 0.3
   wallCheckDistance: 0.7
-  minJumpHeight: 2
+  minJumpHeight: 1.5
   cam: {fileID: 0}
   jumpKey: 32
   slideKey: 304
