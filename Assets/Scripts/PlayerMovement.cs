@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed;
     public float dashSpeed;
     public float runSpeed; 
+    public float wallrunSpeed; 
     public float groundDrag;
 
     [Header("Jumping")]
@@ -37,6 +38,28 @@ public class PlayerMovement : MonoBehaviour
     public float maxSlideTime;
     public float slideForce;
 
+    [Header("Wallrunning")]
+    public float wallRunForce;
+    public float maxWallRunTime;
+    private float wallRunTimer;
+    private bool isWallrunning;
+    public float wallJumpUpForce;
+    public float wallJumpSideForce;
+    private bool exitingWall;
+    public float exitWallTime;
+    private float exitWallTimer; 
+
+    [Header("Wall detection")]
+    public float wallCheckDistance;
+    public float minJumpHeight;
+    private RaycastHit leftWallHit, rightWallHit;
+    private bool wallLeft, wallRight;
+
+    [Header("Camera")]
+    public PlayerCamera cam;
+    
+
+
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space; 
     public KeyCode slideKey = KeyCode.LeftShift; 
@@ -46,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground check")]
     public float playerHeight;
     public LayerMask groundLayerMask;
+    public LayerMask wallLayerMask;
     private bool isGrounded; 
 
     public Transform orientation;
@@ -63,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
         CROUCHING,
         SLIDING,
         DASHING, 
+        WALLRUNNING, 
         AIR
     }
 
@@ -77,11 +102,12 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayerMask);
-        Debug.Log(isGrounded); 
+        Debug.DrawRay(transform.position, Vector3.down * (playerHeight * 0.5f + 0.2f), Color.green);
 
         GetInput();
         StateHandler(); 
-        LimitSpeed(); 
+        LimitSpeed();
+        CheckForWall(); 
 
         //Drag on player
         if (isGrounded && currentState != MovementState.DASHING)
@@ -109,6 +135,11 @@ public class PlayerMovement : MonoBehaviour
         {
             SlideMovement(); 
         }
+
+        if (isWallrunning)
+        {
+            WallrunMovement(); 
+        }
     }
 
     private void GetInput()
@@ -120,7 +151,6 @@ public class PlayerMovement : MonoBehaviour
         //Jump Input
         if(Input.GetKey(jumpKey) && readyToJump && isGrounded)
         {
-          
             readyToJump = false;
             Jump();
 
@@ -144,11 +174,65 @@ public class PlayerMovement : MonoBehaviour
             Dash(); 
         }
 
+        //Wallrun Input
+        if((wallLeft || wallRight) && verticalInput > 0 && AboveGround() && !exitingWall)
+        {
+            if (!isWallrunning)
+            {
+                StartWallrun();
+            }
+
+            if(wallRunTimer > 0)
+            {
+                wallRunTimer -= Time.deltaTime; 
+            }
+
+            if(wallRunTimer <=0 && isWallrunning)
+            {
+                exitingWall = true;
+                exitWallTimer = exitWallTime; 
+            }
+
+            if (Input.GetKeyDown(jumpKey))
+            {
+                WallJump(); 
+            }
+            
+        }else if(exitingWall)
+        {
+            if (isWallrunning)
+            {
+                StopWallrun();
+            }
+
+            if(exitWallTimer > 0)
+            {
+                exitWallTimer -= Time.deltaTime; 
+            }
+            if(exitWallTimer <= 0)
+            {
+                exitingWall = false; 
+            }
+        }
+        else
+        {
+            if (isWallrunning)
+            {
+                StopWallrun(); 
+            }
+        }
+
     }
 
     private void StateHandler()
     {
-        if (isDashing)
+
+        if (isWallrunning)
+        {
+            currentState = MovementState.WALLRUNNING;
+            moveSpeed = wallrunSpeed; 
+        }
+        else if (isDashing)
         {
             currentState = MovementState.DASHING;
             moveSpeed = dashSpeed; 
@@ -182,7 +266,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rigibody.AddForce(moveDir * moveSpeed * 10f, ForceMode.Force);
         }
-        else if (!isGrounded)
+        else if (!isGrounded && exitingWall)
         {
             rigibody.AddForce(moveDir * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
@@ -273,5 +357,102 @@ public class PlayerMovement : MonoBehaviour
     {
         isSliding = false;
         transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+    }
+
+
+    private void CheckForWall()
+    {
+        wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallHit, wallCheckDistance, wallLayerMask); 
+        wallLeft = Physics.Raycast(transform.position, -orientation.right, out leftWallHit, wallCheckDistance, wallLayerMask); 
+    }
+
+    private bool AboveGround()
+    {
+        return !Physics.Raycast(transform.position, Vector3.down, minJumpHeight, groundLayerMask); 
+    }
+
+    private void StartWallrun()
+    {
+
+        isWallrunning = true;
+        wallRunTimer = maxWallRunTime;
+
+        cam.DoFov(75f);
+        if (wallLeft)
+        {
+            cam.DoTilt(-5f);
+        }
+        else if (wallRight)
+        {
+            cam.DoTilt(5f);
+        }
+    }
+
+    private void WallrunMovement()
+    {
+        rigibody.useGravity = false;
+        rigibody.velocity = new Vector3(rigibody.velocity.x, 0f, rigibody.velocity.z); 
+
+        Vector3 wallNormal = Vector3.zero;
+
+        if (wallRight)
+        {
+            wallNormal = rightWallHit.normal;
+        }
+        else if(wallLeft)
+        {
+            wallNormal = leftWallHit.normal;
+        }
+
+        Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
+
+        if((orientation.forward - wallForward).magnitude > (orientation.forward - -wallForward).magnitude)
+        {
+            wallForward = -wallForward; 
+        }
+
+        rigibody.AddForce(wallForward * wallRunForce, ForceMode.Force); 
+    }
+
+    private void StopWallrun()
+    {
+
+        rigibody.useGravity = true;
+        isWallrunning = false;
+
+        //Reset camera effects
+        cam.DoFov(60f);
+        cam.DoTilt(0f); 
+    }
+
+    private void WallJump()
+    {
+        exitingWall = true;
+        exitWallTimer = exitWallTime; 
+
+
+        Vector3 wallNormal = Vector3.zero;
+
+        if (wallRight)
+        {
+            wallNormal = rightWallHit.normal;
+        }
+        else if (wallLeft)
+        {
+            wallNormal = leftWallHit.normal;
+        }
+
+        Vector3 forceToApply = transform.up * wallJumpUpForce + wallNormal * wallJumpSideForce;
+        delayedForceToApply = forceToApply;
+
+        rigibody.velocity = new Vector3(rigibody.velocity.x, 0f, rigibody.velocity.z);
+
+        Invoke(nameof(DelayedWallJump), 0.025f);
+
+    }
+
+    private void DelayedWallJump()
+    {
+        rigibody.AddForce(delayedForceToApply, ForceMode.Impulse);
     }
 }
