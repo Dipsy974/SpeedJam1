@@ -25,6 +25,8 @@ public class Throwing : MonoBehaviour
 
     private void Update()
     {
+        attackPoint.localRotation = cam.localRotation; 
+
         if(Input.GetKeyDown(throwKey) && readyToThrow && totalThrows > 0)
         {
             Throw(); 
@@ -44,6 +46,13 @@ public class Throwing : MonoBehaviour
         Vector3 forceToAdd = cam.transform.forward * throwForce + transform.up * throwUpwardForce;
         projectileRigibody.AddForce(forceToAdd, ForceMode.Impulse);
 
-        totalThrows--; 
+        totalThrows--;
+
+        Invoke(nameof(ResetThrow), throwCooldown); 
+    }
+
+    private void ResetThrow()
+    {
+        readyToThrow = true; 
     }
 }
