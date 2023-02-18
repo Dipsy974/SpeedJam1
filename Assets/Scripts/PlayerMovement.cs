@@ -47,7 +47,8 @@ public class PlayerMovement : MonoBehaviour
     public float wallJumpSideForce;
     private bool exitingWall;
     public float exitWallTime;
-    private float exitWallTimer; 
+    private float exitWallTimer;
+    public ParticleSystem speedParticles; 
 
     [Header("Wall detection")]
     public float wallCheckDistance;
@@ -101,7 +102,8 @@ public class PlayerMovement : MonoBehaviour
         rigibody = GetComponent<Rigidbody>();
         rigibody.freezeRotation = true;
 
-        startYScale = transform.localScale.y; 
+        startYScale = transform.localScale.y;
+
     }
 
     private void Update()
@@ -378,6 +380,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void StartWallrun()
     {
+        speedParticles.Play(); // PLAY PARTICLES
 
         isWallrunning = true;
         wallRunTimer = maxWallRunTime;
@@ -421,6 +424,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void StopWallrun()
     {
+        speedParticles.Stop();
 
         rigibody.useGravity = true;
         isWallrunning = false;
