@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1599437750883720328}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SolPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,6 +98,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a645392718c4eda4fba8f01cf10d878b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a645392718c4eda4fba8f01cf10d878b, type: 3}
