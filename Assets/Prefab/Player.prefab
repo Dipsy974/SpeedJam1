@@ -98,7 +98,7 @@ MonoBehaviour:
   dashSpeed: 30
   runSpeed: 8
   wallrunSpeed: 8
-  groundDrag: 4
+  groundDrag: 7
   jumpForce: 11
   jumpCooldown: 0.25
   airMultiplier: 0.4
@@ -118,6 +118,7 @@ MonoBehaviour:
   exitWallTime: 0.2
   wallCheckDistance: 0.7
   minJumpHeight: 2
+  cam: {fileID: 0}
   jumpKey: 32
   slideKey: 304
   dashKey: 102
