@@ -7,16 +7,17 @@ public class Throwing : MonoBehaviour
     [Header("References")]
     public Transform cam;
     public Transform attackPoint;
-    public GameObject objectToThrow;
+    public Projectile objectToThrow;
 
     [Header("Settings")]
-    public int totalThrows;
     public float throwCooldown;
     public KeyCode throwKey = KeyCode.Mouse1;
     public float throwForce;
     public float throwUpwardForce;
 
     private bool readyToThrow;
+
+    private Projectile instanceProjectile; 
 
     private void Start()
     {
@@ -25,11 +26,19 @@ public class Throwing : MonoBehaviour
 
     private void Update()
     {
-        attackPoint.localRotation = cam.localRotation; 
 
-        if(Input.GetKeyDown(throwKey) && readyToThrow && totalThrows > 0)
+
+        if(Input.GetKeyDown(throwKey))
         {
-            Throw(); 
+            if(instanceProjectile == null && readyToThrow)
+            {
+                Throw();
+            }
+            else if(instanceProjectile != null)
+            {
+                instanceProjectile.Explode(); 
+            }
+            
         }
     }
 
@@ -38,7 +47,9 @@ public class Throwing : MonoBehaviour
         readyToThrow = false;
 
         //Instantiation
-        GameObject projectile = Instantiate(objectToThrow, attackPoint.position, cam.rotation);
+        Projectile projectile = Instantiate(objectToThrow, attackPoint.position, cam.rotation);
+
+        instanceProjectile = projectile; 
 
         Rigidbody projectileRigibody = projectile.GetComponent<Rigidbody>();
 
@@ -46,7 +57,6 @@ public class Throwing : MonoBehaviour
         Vector3 forceToAdd = cam.transform.forward * throwForce + transform.up * throwUpwardForce;
         projectileRigibody.AddForce(forceToAdd, ForceMode.Impulse);
 
-        totalThrows--;
 
         Invoke(nameof(ResetThrow), throwCooldown); 
     }
