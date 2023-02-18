@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3645170715713890902}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pilone02Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,6 +110,11 @@ PrefabInstance:
       value: Pilone_02 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 62f9e1c512853634cbf4ebbcd06be06d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 647ad0b215b19d740882bbacb0099992,
         type: 3}
       propertyPath: m_Layer
       value: 6
