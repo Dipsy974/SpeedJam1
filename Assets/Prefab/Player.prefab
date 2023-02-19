@@ -48,6 +48,7 @@ MonoBehaviour:
   attackPoint: {fileID: 3407900588961797470}
   objectToThrow: {fileID: 5597933224513522, guid: f17b1e9707425ce4d9d6bbfdd34ed444,
     type: 3}
+  player: {fileID: 5254784697258943170}
   throwCooldown: 2
   throwKey: 324
   throwForce: 18
@@ -176,9 +177,12 @@ MonoBehaviour:
   minJumpHeight: 1.5
   affectedTime: 0.5
   cam: {fileID: 0}
+  spawnPosition: {x: 0, y: 0, z: 0}
+  hasFrog: 0
   jumpKey: 32
   slideKey: 304
   dashKey: 102
+  interactionKey: 101
   playerHeight: 2
   groundLayerMask:
     serializedVersion: 2
