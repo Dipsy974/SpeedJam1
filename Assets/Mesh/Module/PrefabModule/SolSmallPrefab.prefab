@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5734595176047510338}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SolSmallPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,8 +24,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645090375850607374}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.027536}
+  m_LocalScale: {x: 1, y: 1, z: 1.6005}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 628399470638409629}
@@ -98,6 +98,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SolSmall_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4cc274a80383dc94c9809039f6bd068f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cc274a80383dc94c9809039f6bd068f, type: 3}
