@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WallRunLeft
+  m_Name: WALLRUNNING_LEFT
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -33,7 +33,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HandJump
+  m_Name: JUMPING
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -59,7 +59,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: IdleHands
+  m_Name: IDLE
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -85,7 +85,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RunningHands
+  m_Name: RUNNING
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -115,32 +115,32 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -6681995617535463833}
-    m_Position: {x: 230, y: 50, z: 0}
+    m_Position: {x: 290, y: 70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2658189610608076189}
-    m_Position: {x: 390, y: 150, z: 0}
+    m_Position: {x: 420, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5970258533650732988}
-    m_Position: {x: 425, y: 215, z: 0}
+    m_Position: {x: 350, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6966032961144309680}
-    m_Position: {x: 250, y: 250, z: 0}
+    m_Position: {x: -10, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6807273651382459339}
-    m_Position: {x: 285, y: 315, z: 0}
+    m_Position: {x: 350, y: 320, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8688533266861204641}
-    m_Position: {x: 80, y: 340, z: 0}
+    m_Position: {x: -10, y: 310, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5234678413692163731}
-    m_Position: {x: 200, y: 180, z: 0}
+    m_Position: {x: -10, y: 200, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 50, y: 20, z: 0}
-  m_EntryPosition: {x: 50, y: 120, z: 0}
+  m_AnyStatePosition: {x: 190, y: 160, z: 0}
+  m_EntryPosition: {x: 50, y: 80, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -6681995617535463833}
@@ -173,7 +173,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CrouchHand
+  m_Name: SLIDING
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -199,7 +199,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WallRunRight
+  m_Name: WALLRUNNING_RIGHT
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -225,7 +225,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FallingHand
+  m_Name: FALLING
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
