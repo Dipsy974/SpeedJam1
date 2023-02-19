@@ -7,19 +7,19 @@ public class Projectile : MonoBehaviour
     public float explosionRadius;
     public float explosionForce;
 
-    private Rigidbody rigidbody;
+    private Rigidbody rigibody;
     private bool hitTarget;
 
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody>(); 
+        rigibody = GetComponent<Rigidbody>(); 
 
         //Effects at start
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        rigidbody.isKinematic = true;
+        rigibody.isKinematic = true;
         //transform.SetParent(collision.transform); 
     }
 
