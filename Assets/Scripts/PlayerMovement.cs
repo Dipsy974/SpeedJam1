@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     public float runSpeed; 
     public float wallrunSpeed; 
     public float groundDrag;
+    public Animator playerAnimator;
+    public GameObject playerObject; 
 
     [Header("Jumping")]
     public float jumpForce;
@@ -87,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rigibody;
 
     public MovementState currentState; 
+    public AnimationState currentAnimationState; 
     public enum MovementState
     {
         WALKING,
@@ -96,6 +99,17 @@ public class PlayerMovement : MonoBehaviour
         WALLRUNNING, 
         AIR
     }
+    
+    public enum AnimationState
+    {
+        IDLE,
+        RUNNING,
+        SLIDING,
+        WALLRUNNING_LEFT,
+        WALLRUNNING_RIGHT, 
+        JUMPING,
+        FALLING
+    }
 
     private void Start()
     {
@@ -103,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
         rigibody.freezeRotation = true;
 
         startYScale = transform.localScale.y;
-
+        
     }
 
     private void Update()
@@ -155,18 +169,34 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        if((horizontalInput != 0 || verticalInput != 0) && isGrounded && !isSliding)
+        {
+            ChangeAnimationState(AnimationState.RUNNING); 
+        }else if(horizontalInput == 0 && verticalInput == 0 && isGrounded)
+        {
+            ChangeAnimationState(AnimationState.IDLE);
+        }
+
         //Jump Input
         if(Input.GetKey(jumpKey) && readyToJump && isGrounded)
         {
+            ChangeAnimationState(AnimationState.JUMPING);
             readyToJump = false;
             Jump();
 
             Invoke(nameof(ResetJump), jumpCooldown); 
         }
 
+        if(rigibody.velocity.y < 0 && !isGrounded)
+        {
+            ChangeAnimationState(AnimationState.FALLING);
+        }
+        
+
         //Crouch Input
         if (Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0))
         {
+            ChangeAnimationState(AnimationState.SLIDING);
             StartSlide(); 
         }
 
@@ -187,6 +217,13 @@ public class PlayerMovement : MonoBehaviour
             if (!isWallrunning)
             {
                 StartWallrun();
+                if (wallLeft)
+                {
+                    ChangeAnimationState(AnimationState.WALLRUNNING_LEFT);
+                }else if (wallRight)
+                {
+                    ChangeAnimationState(AnimationState.WALLRUNNING_RIGHT);
+                }
             }
 
             if(wallRunTimer > 0)
@@ -202,6 +239,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKeyDown(jumpKey))
             {
+                ChangeAnimationState(AnimationState.JUMPING);
                 WallJump(); 
             }
             
@@ -307,9 +345,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void StartSlide()
     {
-        isSliding = true; 
+        isSliding = true;
 
-        transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
+        playerObject.transform.localScale = new Vector3(playerObject.transform.localScale.x, slideYScale, playerObject.transform.localScale.z);
         rigibody.AddForce(Vector3.down * 5f, ForceMode.Impulse);
 
         slideTimer = maxSlideTime; 
@@ -363,7 +401,7 @@ public class PlayerMovement : MonoBehaviour
     private void StopSlide()
     {
         isSliding = false;
-        transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+        playerObject.transform.localScale = new Vector3(playerObject.transform.localScale.x, startYScale, playerObject.transform.localScale.z);
     }
 
 
@@ -476,5 +514,18 @@ public class PlayerMovement : MonoBehaviour
     private void CancelAffectedByExplosion()
     {
         justExploded = false; 
+    }
+
+    private void ChangeAnimationState(AnimationState newState)
+    {
+        if(currentAnimationState == newState)
+        {
+            return; 
+        }
+
+        Debug.Log(newState.ToString());
+        playerAnimator.Play(newState.ToString());
+
+        currentAnimationState = newState; 
     }
 }
