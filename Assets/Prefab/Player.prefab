@@ -152,11 +152,13 @@ MonoBehaviour:
   runSpeed: 8
   wallrunSpeed: 8
   groundDrag: 7
+  playerAnimator: {fileID: 6603334694131929290}
+  playerObject: {fileID: 5254784697452321115}
   jumpForce: 11
   jumpCooldown: 0.25
   airMultiplier: 0.4
   crouchSpeed: 0
-  crouchYScale: 0.5
+  crouchYScale: 0.4
   dashForce: 20
   dashUpwardForce: 0
   dashDuration: 0.25
@@ -169,6 +171,7 @@ MonoBehaviour:
   wallJumpUpForce: 12
   wallJumpSideForce: 15
   exitWallTime: 0.3
+  speedParticles: {fileID: 0}
   wallCheckDistance: 0.7
   minJumpHeight: 1.5
   affectedTime: 0.5
@@ -185,6 +188,7 @@ MonoBehaviour:
     m_Bits: 128
   orientation: {fileID: 5254784697878412247}
   currentState: 0
+  currentAnimationState: 0
 --- !u!1 &5254784697452321115
 GameObject:
   m_ObjectHideFlags: 0
