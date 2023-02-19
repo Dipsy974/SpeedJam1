@@ -70,4 +70,5 @@ public class FlameThrowing : MonoBehaviour
         flameParticles.Stop();
         smokeParticles.Stop();
     }
+
 }

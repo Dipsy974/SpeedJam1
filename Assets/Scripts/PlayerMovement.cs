@@ -65,7 +65,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Camera")]
     public PlayerCamera cam;
-    
+
+
+    [Header("Spawn position")]
+    public Vector3 spawnPosition;
 
 
     [Header("Keybinds")]
@@ -115,6 +118,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rigibody = GetComponent<Rigidbody>();
         rigibody.freezeRotation = true;
+
+        spawnPosition = transform.position; 
 
         startYScale = transform.localScale.y;
         
@@ -528,4 +533,17 @@ public class PlayerMovement : MonoBehaviour
 
         currentAnimationState = newState; 
     }
+
+    public void SavePosition(Vector3 savePoint)
+    {
+        spawnPosition = savePoint;
+        Debug.Log(spawnPosition); 
+    }
+
+    public void Respawn()
+    {
+        transform.position = spawnPosition; 
+    }
+
+
 }

@@ -6,22 +6,26 @@ public class StickToPlatform : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        PlayerMovement player = other.transform.gameObject.transform.parent.GetComponent<PlayerMovement>(); 
-        
-        if(player != null)
-        {
-            player.transform.parent = transform; 
-        }
 
+        if(other.GetComponent<CapsuleCollider>() != null)
+        {
+            PlayerMovement player = other.transform.gameObject.transform.parent.GetComponent<PlayerMovement>();
+            if (player != null)
+            {
+                player.transform.parent = transform;
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        PlayerMovement player = other.transform.gameObject.transform.parent.GetComponent<PlayerMovement>();
-
-        if (player != null)
+        if (other.GetComponent<CapsuleCollider>() != null)
         {
-            player.transform.parent = null;
+            PlayerMovement player = other.transform.gameObject.transform.parent.GetComponent<PlayerMovement>();
+            if (player != null)
+            {
+                player.transform.parent = null;
+            }
         }
     }
 
