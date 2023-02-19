@@ -9,19 +9,37 @@ public class FlameThrowing : MonoBehaviour
     public float durationTime;
     private float resetTimer;
     public float resetTime;
-    private bool isOn; 
+    public float timeBeforeAwake; 
+    private bool isOn;
+    private bool isAwake = false; 
    
 
     // Start is called before the first frame update
     void Start()
     {
-        resetTimer = resetTime; 
+        resetTimer = resetTime;
+        StopFlame(); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isOn)
+        //Awake timer
+        if (!isAwake)
+        {
+            timeBeforeAwake -= Time.deltaTime;
+        }
+
+        if(timeBeforeAwake <= 0)
+        {
+            timeBeforeAwake = 100; 
+            StartFlame(); 
+            isAwake = true; 
+        }
+   
+        
+
+        if (!isOn && isAwake)
         {
             resetTimer -= Time.deltaTime;
         }
@@ -31,6 +49,8 @@ public class FlameThrowing : MonoBehaviour
             StartFlame();
             resetTimer = resetTime; 
         }
+
+
     }
 
     private void StartFlame()
