@@ -36,7 +36,7 @@ public class Axe : MonoBehaviour
         //Reverse direction
         float angleDiff = Mathf.Abs(angleTarget) - Mathf.Abs(axeToRotate.transform.eulerAngles.z);
  
-        Debug.Log(angleDiff); 
+        
 
         if (Mathf.Abs(angleDiff) <= 20f)
         {

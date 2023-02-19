@@ -8,7 +8,7 @@ public class FlameParticlesInteraction : MonoBehaviour
     {
         if (other.gameObject.GetComponent<PlayerMovement>() != null)
         {
-            Debug.Log("Mort");
+            other.gameObject.GetComponent<PlayerMovement>().Respawn();
         }
 
     }
