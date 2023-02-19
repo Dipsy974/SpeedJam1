@@ -29,8 +29,8 @@ public class Axe : MonoBehaviour
         //float angle = Mathf.LerpAngle(axeToRotate.transform.rotation.z, angleTarget, Time.deltaTime * rotateSpeed);
         //axeToRotate.transform.eulerAngles = new Vector3(0, 0, angle);
 
-
-        axeToRotate.transform.rotation = Quaternion.Lerp(axeToRotate.transform.rotation, Quaternion.Euler(axeToRotate.transform.rotation.x, axeToRotate.transform.rotation.y, angleTarget), Time.deltaTime * rotateSpeed);
+        
+        axeToRotate.transform.localRotation = Quaternion.Lerp(axeToRotate.transform.localRotation, Quaternion.Euler(axeToRotate.transform.localRotation.x, axeToRotate.transform.localRotation.y, angleTarget), Time.deltaTime * rotateSpeed);
 
 
         //Reverse direction
@@ -55,4 +55,5 @@ public class Axe : MonoBehaviour
             return initialAngle - angle;
         }
     }
+
 }
