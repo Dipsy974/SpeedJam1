@@ -528,4 +528,6 @@ public class PlayerMovement : MonoBehaviour
 
         currentAnimationState = newState; 
     }
+
+
 }
