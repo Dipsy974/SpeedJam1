@@ -32,7 +32,7 @@ public class Arrow : MonoBehaviour
 
         if (collision.gameObject.GetComponent<PlayerMovement>() != null)
         {
-            Debug.Log("Mort");
+            collision.gameObject.GetComponent<PlayerMovement>().Respawn();
         }
 
         Destroy(gameObject); 
