@@ -8,6 +8,7 @@ public class Throwing : MonoBehaviour
     public Transform cam;
     public Transform attackPoint;
     public Projectile objectToThrow;
+    public PlayerMovement player; 
 
     [Header("Settings")]
     public float throwCooldown;
@@ -28,7 +29,7 @@ public class Throwing : MonoBehaviour
     {
 
 
-        if(Input.GetKeyDown(throwKey))
+        if(Input.GetKeyDown(throwKey) && player.hasFrog)
         {
             if(instanceProjectile == null && readyToThrow)
             {
