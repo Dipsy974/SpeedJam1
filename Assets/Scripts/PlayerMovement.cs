@@ -70,11 +70,19 @@ public class PlayerMovement : MonoBehaviour
     [Header("Spawn position")]
     public Vector3 spawnPosition;
 
+    //[Header("Item detection")]
+    private ItemCollectible itemInRange;
+    private bool isInRange;
+    private bool hasShield = false;
+    private bool hasWallRun = false;
+    public bool hasFrog = false; 
+
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space; 
     public KeyCode slideKey = KeyCode.LeftShift; 
     public KeyCode dashKey = KeyCode.F; 
+    public KeyCode interactionKey = KeyCode.E; 
 
 
     [Header("Ground check")]
@@ -217,7 +225,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Wallrun Input
-        if((wallLeft || wallRight) && verticalInput > 0 && AboveGround() && !exitingWall)
+        if((wallLeft || wallRight) && verticalInput > 0 && AboveGround() && !exitingWall && hasWallRun)
         {
             if (!isWallrunning)
             {
@@ -272,6 +280,14 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        //Interaction Input 
+        if (Input.GetKey(interactionKey) && isInRange)
+        {
+            ActivePower(itemInRange.powerUnlocked);
+        }
+
+        Debug.Log(isInRange);
+        Debug.Log(itemInRange);
     }
 
     private void StateHandler()
@@ -543,6 +559,39 @@ public class PlayerMovement : MonoBehaviour
     public void Respawn()
     {
         transform.position = spawnPosition; 
+    }
+
+    public void SetItemInRange(ItemCollectible item)
+    {
+        isInRange = true; 
+        itemInRange = item;
+        Debug.Log(itemInRange); 
+    }
+
+    public void ClearItemInRange()
+    {
+        isInRange = false; 
+        itemInRange = null;
+        Debug.Log(itemInRange);
+    }
+
+    public void ActivePower(string power)
+    {
+
+        switch (power)
+        {
+            case "Frog":
+                hasFrog = true;
+                break;
+            case "Shield":
+                hasShield = true;
+                break;
+            case "Wallrun":
+                hasWallRun = true;
+                break;
+
+        }
+        itemInRange.SetInactive();
     }
 
 
