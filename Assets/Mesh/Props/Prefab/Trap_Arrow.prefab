@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94750e306033b1b4ea629056b8b81ad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowPrefab: {fileID: 126206315917545270, guid: cb9c0af4e5a7ec744aef98612126383d,
+  arrowPrefab: {fileID: 4389745589388843715, guid: 6b7fa6f2f44aaa04d8dfb8859bd4e4ea,
     type: 3}
   startPosition: {fileID: 3210548224025531563}
   resetTime: 2
