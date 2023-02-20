@@ -43,7 +43,6 @@ public class Shield : MonoBehaviour
 
                 parentObject.GetComponent<PlayerMovement>().GetAffectedByExplosion(forceDirection, impactForce);
 
-                player.RemoveShield();
             }
         }
     }

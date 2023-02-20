@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Shielding")]
     public GameObject shield;
-    private bool isShielding;
+    public bool isShielding;
     public float shieldDuration; 
     
 
@@ -582,6 +582,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Respawn()
     {
+        rigibody.velocity = Vector3.zero; 
         transform.position = spawnPosition; 
     }
 

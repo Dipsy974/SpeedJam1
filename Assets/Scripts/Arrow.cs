@@ -32,7 +32,11 @@ public class Arrow : MonoBehaviour
 
         if (collision.gameObject.GetComponent<PlayerMovement>() != null)
         {
-            collision.gameObject.GetComponent<PlayerMovement>().Respawn();
+            if (!collision.gameObject.GetComponent<PlayerMovement>().isShielding)
+            {
+                collision.gameObject.GetComponent<PlayerMovement>().Respawn();
+            }
+
         }
 
         Destroy(gameObject); 
