@@ -7,6 +7,7 @@ public class Timer : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
     public float currentTime;
+    public static string timeSaved; 
     private bool timerEnded = false;
 
     TMP_Text textMesh;
@@ -48,11 +49,19 @@ public class Timer : MonoBehaviour
         }
 
         mesh.vertices = vertices;
-        timerText.canvasRenderer.SetMesh(mesh); 
+        timerText.canvasRenderer.SetMesh(mesh);
+
+
     }
 
     Vector2 Wobble(float time)
     {
         return new Vector2(Mathf.Sin(time * 5f), Mathf.Cos(time * 2.5f)); 
+    }
+
+    public void GetTimeSaved()
+    {
+        timerEnded = true; 
+        timeSaved = timerText.text; 
     }
 }
