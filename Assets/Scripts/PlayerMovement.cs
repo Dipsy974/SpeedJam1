@@ -76,11 +76,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Spawn position")]
     public Vector3 spawnPosition;
 
-    //[Header("Item detection")]
+    [Header("Item detection")]
     private ItemCollectible itemInRange;
     private bool isInRange;
-    private bool hasShield = false;
-    private bool hasWallRun = false;
+    public bool hasShield = false;
+    public bool hasWallRun = false;
     public bool hasFrog = false; 
 
 
