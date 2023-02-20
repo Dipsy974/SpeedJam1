@@ -4824,7 +4824,7 @@ GameObject:
   - component: {fileID: 108398456957185435}
   - component: {fileID: 7160532792113792035}
   - component: {fileID: 7902776065531247150}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrogExplosif
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4890,6 +4890,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionRadius: 4
   explosionForce: 10
+  animator: {fileID: 6972438142161270351}
+  particles: {fileID: 6038178110582813161, guid: dcc9c468e68ffee419e8bef243cfda18,
+    type: 3}
 --- !u!1001 &8723624135231999290
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -6,13 +6,17 @@ public class Projectile : MonoBehaviour
 {
     public float explosionRadius;
     public float explosionForce;
+    public Animator animator;
+    public GameObject particles; 
 
     private Rigidbody rigibody;
     private bool hitTarget;
 
     private void Start()
     {
-        rigibody = GetComponent<Rigidbody>(); 
+        rigibody = GetComponent<Rigidbody>();
+
+        Physics.IgnoreLayerCollision(9, 11);
 
         //Effects at start
     }
@@ -59,12 +63,15 @@ public class Projectile : MonoBehaviour
             }
         }
 
-        Invoke(nameof(DestroyProjectile), 0.1f); 
+        animator.Play("FrogExplosionV2");
+        
+        Invoke(nameof(DestroyProjectile), 0.3f); 
    
     }
 
     private void DestroyProjectile()
     {
+        Instantiate(particles, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     private float moveSpeed;
-    public float dashSpeed;
     public float runSpeed; 
     public float wallrunSpeed; 
     public float groundDrag;
@@ -24,14 +23,6 @@ public class PlayerMovement : MonoBehaviour
     public float crouchYScale;
     private float startYScale;
 
-    [Header("Dashing")]
-    public float dashForce;
-    public float dashUpwardForce;
-    public float dashDuration;
-    public float dashCooldown;
-    private float dashCdTimer;
-    private Vector3 delayedForceToApply; //to apply dash with a delay
-    private bool isDashing;
 
     [Header("Sliding")]
     public float slideYScale;
@@ -51,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     public float exitWallTime;
     private float exitWallTimer;
     public ParticleSystem speedParticles;
+    private Vector3 delayedForceToApply; 
 
     [Header("Shielding")]
     public GameObject shield;
@@ -87,7 +79,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space; 
     public KeyCode slideKey = KeyCode.LeftShift; 
-    public KeyCode dashKey = KeyCode.F; 
     public KeyCode interactionKey = KeyCode.E; 
     public KeyCode shieldKey = KeyCode.Mouse0; 
 
@@ -113,7 +104,6 @@ public class PlayerMovement : MonoBehaviour
         WALKING,
         CROUCHING,
         SLIDING,
-        DASHING, 
         WALLRUNNING, 
         AIR
     }
@@ -152,19 +142,13 @@ public class PlayerMovement : MonoBehaviour
         CheckForWall(); 
 
         //Drag on player
-        if (isGrounded && currentState != MovementState.DASHING)
+        if (isGrounded)
         {
             rigibody.drag = groundDrag;
         }
         else
         {
             rigibody.drag = 0; 
-        }
-
-        //Dash Cooldown
-        if(dashCdTimer > 0)
-        {
-            dashCdTimer -= Time.deltaTime; 
         }
 
 
@@ -235,11 +219,6 @@ public class PlayerMovement : MonoBehaviour
             StopSlide(); 
         }
 
-        //Dash Input 
-        if (Input.GetKey(dashKey))
-        {
-            Dash(); 
-        }
 
         //Wallrun Input
         if((wallLeft || wallRight) && verticalInput > 0 && AboveGround() && !exitingWall && hasWallRun)
@@ -322,11 +301,6 @@ public class PlayerMovement : MonoBehaviour
         {
             currentState = MovementState.WALLRUNNING;
             moveSpeed = wallrunSpeed; 
-        }
-        else if (isDashing)
-        {
-            currentState = MovementState.DASHING;
-            moveSpeed = dashSpeed; 
         }
         else if (isSliding)
         {
@@ -412,37 +386,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Dash()
-    {
-        if (dashCdTimer > 0)
-        {
-            return;
-        }
-        else
-        {
-            dashCdTimer = dashCooldown; 
-        }
 
 
-
-        isDashing = true; 
-        Vector3 forceToApply = orientation.forward * dashForce + orientation.up * dashUpwardForce;
-
-        delayedForceToApply = forceToApply;
-        Invoke(nameof(DelayedDash), 0.025f); 
-
-        Invoke(nameof(ResetDash), dashDuration); 
-    }
-
-    private void DelayedDash()
-    {
-        rigibody.AddForce(delayedForceToApply, ForceMode.Impulse); 
-    }
-
-    private void ResetDash()
-    {
-        isDashing = false; 
-    }
 
     private void StopSlide()
     {
@@ -512,6 +457,8 @@ public class PlayerMovement : MonoBehaviour
 
         rigibody.useGravity = true;
         isWallrunning = false;
+
+        //WallJump(); 
 
         //Reset camera effects
         cam.DoFov(60f);
