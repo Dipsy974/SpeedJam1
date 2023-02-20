@@ -50,7 +50,13 @@ public class PlayerMovement : MonoBehaviour
     private bool exitingWall;
     public float exitWallTime;
     private float exitWallTimer;
-    public ParticleSystem speedParticles; 
+    public ParticleSystem speedParticles;
+
+    [Header("Shielding")]
+    public GameObject shield;
+    public bool isShielding;
+    public float shieldDuration; 
+    
 
     [Header("Wall detection")]
     public float wallCheckDistance;
@@ -83,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode slideKey = KeyCode.LeftShift; 
     public KeyCode dashKey = KeyCode.F; 
     public KeyCode interactionKey = KeyCode.E; 
+    public KeyCode shieldKey = KeyCode.Mouse0; 
 
 
     [Header("Ground check")]
@@ -119,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
         WALLRUNNING_LEFT,
         WALLRUNNING_RIGHT, 
         JUMPING,
+        SHIELDING,
         FALLING
     }
 
@@ -159,6 +167,7 @@ public class PlayerMovement : MonoBehaviour
             dashCdTimer -= Time.deltaTime; 
         }
 
+
     }
 
     private void FixedUpdate()
@@ -182,10 +191,10 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if((horizontalInput != 0 || verticalInput != 0) && isGrounded && !isSliding)
+        if((horizontalInput != 0 || verticalInput != 0) && isGrounded && !isSliding && !isShielding)
         {
             ChangeAnimationState(AnimationState.RUNNING); 
-        }else if(horizontalInput == 0 && verticalInput == 0 && isGrounded)
+        }else if(horizontalInput == 0 && verticalInput == 0 && isGrounded && !isShielding)
         {
             ChangeAnimationState(AnimationState.IDLE);
         }
@@ -193,14 +202,18 @@ public class PlayerMovement : MonoBehaviour
         //Jump Input
         if(Input.GetKey(jumpKey) && readyToJump && isGrounded)
         {
-            ChangeAnimationState(AnimationState.JUMPING);
+            if(!isShielding)
+            {
+                ChangeAnimationState(AnimationState.JUMPING);
+            }
+            
             readyToJump = false;
             Jump();
 
             Invoke(nameof(ResetJump), jumpCooldown); 
         }
 
-        if(rigibody.velocity.y < 0 && !isGrounded)
+        if(rigibody.velocity.y < 0 && !isGrounded && !isShielding)
         {
             ChangeAnimationState(AnimationState.FALLING);
         }
@@ -209,7 +222,11 @@ public class PlayerMovement : MonoBehaviour
         //Crouch Input
         if (Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0))
         {
-            ChangeAnimationState(AnimationState.SLIDING);
+            if (!isShielding)
+            {
+                ChangeAnimationState(AnimationState.SLIDING);
+            }
+            
             StartSlide(); 
         }
 
@@ -230,10 +247,10 @@ public class PlayerMovement : MonoBehaviour
             if (!isWallrunning)
             {
                 StartWallrun();
-                if (wallLeft)
+                if (wallLeft && !isShielding)
                 {
                     ChangeAnimationState(AnimationState.WALLRUNNING_LEFT);
-                }else if (wallRight)
+                }else if (wallRight && !isShielding)
                 {
                     ChangeAnimationState(AnimationState.WALLRUNNING_RIGHT);
                 }
@@ -252,7 +269,11 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKeyDown(jumpKey))
             {
-                ChangeAnimationState(AnimationState.JUMPING);
+                if(!isShielding)
+                {
+                    ChangeAnimationState(AnimationState.JUMPING);
+                }
+                
                 WallJump(); 
             }
             
@@ -286,8 +307,12 @@ public class PlayerMovement : MonoBehaviour
             ActivePower(itemInRange.powerUnlocked);
         }
 
-        Debug.Log(isInRange);
-        Debug.Log(itemInRange);
+        //Shield Input
+        if (Input.GetKey(shieldKey) && hasShield)
+        {
+            ChangeAnimationState(AnimationState.SHIELDING);
+            PutShieldOn(); 
+        }
     }
 
     private void StateHandler()
@@ -544,7 +569,6 @@ public class PlayerMovement : MonoBehaviour
             return; 
         }
 
-        Debug.Log(newState.ToString());
         playerAnimator.Play(newState.ToString());
 
         currentAnimationState = newState; 
@@ -558,6 +582,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Respawn()
     {
+        rigibody.velocity = Vector3.zero; 
         transform.position = spawnPosition; 
     }
 
@@ -594,5 +619,18 @@ public class PlayerMovement : MonoBehaviour
         itemInRange.SetInactive();
     }
 
+    public void PutShieldOn()
+    {
+        shield.SetActive(true);
+        isShielding = true;
+
+        Invoke(nameof(RemoveShield), shieldDuration); 
+    }
+
+    public void RemoveShield()
+    {
+        shield.SetActive(false);
+        isShielding = false;
+    }
 
 }
