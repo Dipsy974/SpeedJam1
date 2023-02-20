@@ -16,7 +16,7 @@ public class CheckObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if( playerMovement.hasShield==true && playerMovement.hasWallRun==true && playerMovement.hasFrog == true){
+        if( playerMovement.hasShield==true && playerMovement.hasWallRun==true && playerMovement.hasFrog == true ){
             this.GetComponent<Animator>().Play("BigDoorOpening");
         }
     }
