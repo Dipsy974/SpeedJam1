@@ -19,8 +19,15 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        rigibody.isKinematic = true;
-        //transform.SetParent(collision.transform); 
+        if(collision.gameObject.layer == 6 || collision.gameObject.layer == 7 ){
+
+            Vector3 normal = collision.contacts[0].normal;
+            transform.rotation = Quaternion.FromToRotation(transform.up, normal);
+
+            rigibody.isKinematic = true;
+            transform.SetParent(collision.transform);
+        }
+        
     }
 
     public void Explode()

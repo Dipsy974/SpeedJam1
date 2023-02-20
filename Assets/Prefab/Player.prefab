@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   attackPoint: {fileID: 3407900588961797470}
-  objectToThrow: {fileID: 5597933224513522, guid: f17b1e9707425ce4d9d6bbfdd34ed444,
+  objectToThrow: {fileID: 7902776065531247150, guid: eb63a209ad87c4740bb0e0aa3581420f,
     type: 3}
   player: {fileID: 5254784697258943170}
   throwCooldown: 2
