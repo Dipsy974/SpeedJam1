@@ -287,7 +287,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Shield Input
-        if (Input.GetKey(shieldKey) && hasShield)
+        if (Input.GetKey(shieldKey) && hasShield && !isShielding)
         {
             ChangeAnimationState(AnimationState.SHIELDING);
             PutShieldOn(); 
@@ -500,6 +500,14 @@ public class PlayerMovement : MonoBehaviour
     {
         justExploded = true; 
         rigibody.AddForceAtPosition(direction * force + Vector3.up * force, transform.position, ForceMode.Impulse);
+
+        Invoke(nameof(CancelAffectedByExplosion), affectedTime);
+    }
+
+    public void GetAffectedByImpact(Vector3 direction, float forceHorizontal, float forceVertical)
+    {
+        justExploded = true;
+        rigibody.AddForceAtPosition(direction * forceHorizontal * 2 + Vector3.up * forceVertical, transform.position, ForceMode.Impulse);
 
         Invoke(nameof(CancelAffectedByExplosion), affectedTime);
     }

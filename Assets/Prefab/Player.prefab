@@ -149,7 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f78c7f6a67bb40449464b63d8311b15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 30
   runSpeed: 8
   wallrunSpeed: 8
   groundDrag: 7
@@ -160,10 +159,6 @@ MonoBehaviour:
   airMultiplier: 0.4
   crouchSpeed: 0
   crouchYScale: 0.4
-  dashForce: 20
-  dashUpwardForce: 0
-  dashDuration: 0.25
-  dashCooldown: 1
   slideYScale: 0.3
   maxSlideTime: 0.75
   slideForce: 300
@@ -181,10 +176,11 @@ MonoBehaviour:
   affectedTime: 0.5
   cam: {fileID: 0}
   spawnPosition: {x: 0, y: 0, z: 0}
+  hasShield: 0
+  hasWallRun: 0
   hasFrog: 0
   jumpKey: 32
   slideKey: 304
-  dashKey: 102
   interactionKey: 101
   shieldKey: 116
   playerHeight: 2
@@ -289,9 +285,9 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5254784697452321115}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ec7b1bc63714bae45bea5c1c1e71c988, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -1309,7 +1305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6fca1b4b9c3d474488de2ae592cf143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactForce: 15
+  impactForce: 60
+  verticalForce: 0
   player: {fileID: 5254784697258943170}
 --- !u!1001 &7148723866331903838
 PrefabInstance:

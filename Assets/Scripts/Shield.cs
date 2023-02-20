@@ -5,6 +5,7 @@ using UnityEngine;
 public class Shield : MonoBehaviour
 {
     public float impactForce;
+    public float verticalForce;
     public PlayerMovement player; 
 
     // Start is called before the first frame update
@@ -41,7 +42,7 @@ public class Shield : MonoBehaviour
 
                 Vector3 forceDirection = (objectPos - transform.position).normalized;
 
-                parentObject.GetComponent<PlayerMovement>().GetAffectedByExplosion(forceDirection, impactForce);
+                parentObject.GetComponent<PlayerMovement>().GetAffectedByImpact(forceDirection, impactForce, verticalForce);
 
             }
         }
