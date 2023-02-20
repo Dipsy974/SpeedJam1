@@ -7,20 +7,27 @@ public class Projectile : MonoBehaviour
     public float explosionRadius;
     public float explosionForce;
 
-    private Rigidbody rigidbody;
+    private Rigidbody rigibody;
     private bool hitTarget;
 
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody>(); 
+        rigibody = GetComponent<Rigidbody>(); 
 
         //Effects at start
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        rigidbody.isKinematic = true;
-        //transform.SetParent(collision.transform); 
+        if(collision.gameObject.layer == 6 || collision.gameObject.layer == 7 ){
+
+            Vector3 normal = collision.contacts[0].normal;
+            transform.rotation = Quaternion.FromToRotation(transform.up, normal);
+
+            rigibody.isKinematic = true;
+            transform.SetParent(collision.transform);
+        }
+        
     }
 
     public void Explode()

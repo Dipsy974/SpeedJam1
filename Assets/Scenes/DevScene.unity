@@ -3108,6 +3108,11 @@ PrefabInstance:
       propertyPath: orientation
       value: 
       objectReference: {fileID: 857968751}
+    - target: {fileID: 7918202551665939471, guid: cde0ab03cce472c4d857881262313e96,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cde0ab03cce472c4d857881262313e96, type: 3}
 --- !u!1001 &7174920560689750594

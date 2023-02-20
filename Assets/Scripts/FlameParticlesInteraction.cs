@@ -8,7 +8,10 @@ public class FlameParticlesInteraction : MonoBehaviour
     {
         if (other.gameObject.GetComponent<PlayerMovement>() != null)
         {
-            other.gameObject.GetComponent<PlayerMovement>().Respawn();
+            if (!other.gameObject.GetComponent<PlayerMovement>().isShielding)
+            {
+                other.gameObject.GetComponent<PlayerMovement>().Respawn();
+            }
         }
 
     }
