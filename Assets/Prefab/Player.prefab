@@ -149,14 +149,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f78c7f6a67bb40449464b63d8311b15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 8
+  runSpeed: 10
   wallrunSpeed: 8
   groundDrag: 7
   playerAnimator: {fileID: 6603334694131929290}
   playerObject: {fileID: 5254784697452321115}
-  jumpForce: 11
+  jumpForce: 15
   jumpCooldown: 0.25
-  airMultiplier: 0.4
+  airMultiplier: 0.6
   crouchSpeed: 0
   crouchYScale: 0.4
   slideYScale: 0.3
@@ -164,9 +164,9 @@ MonoBehaviour:
   slideForce: 300
   wallRunForce: 200
   maxWallRunTime: 0.75
-  wallJumpUpForce: 12
-  wallJumpSideForce: 15
-  exitWallTime: 0.3
+  wallJumpUpForce: 8
+  wallJumpSideForce: 13
+  exitWallTime: 0.4
   speedParticles: {fileID: 0}
   shield: {fileID: 7747895509064264860}
   isShielding: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   slideKey: 304
   interactionKey: 101
   shieldKey: 116
-  playerHeight: 2
+  playerHeight: 3
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
